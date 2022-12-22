@@ -71,11 +71,30 @@ public class Test1 {
 
 
     }
+    @Test
+    public void test4(){
+        driver().get("https://demoqa.com/checkbox");
+        By locator=By.xpath("//li[contains(@class,\"collapsed\")]//button[@title=\"Toggle\"]");
+
+        while (driver().findElements(locator).size()>0){
+            for (WebElement e:driver().findElements(locator)) {
+                clickNew(e);
+            }
+        }
+    }
     public void clickNew(By locator){
 
      waitNew(5).until(ExpectedConditions.elementToBeClickable(locator)).click();
 
     }
+    public void clickNew(WebElement e){
+
+        waitNew(5).until(ExpectedConditions.elementToBeClickable(e)).click();
+
+    }
+
+
+
     public void clickNew1(By locator){
 
         if (waitNew1(locator)){
