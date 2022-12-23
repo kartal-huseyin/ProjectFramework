@@ -32,7 +32,7 @@ public class Driver {
                     ChromeOptions options = new ChromeOptions();
                     //   options.addArguments("user-data-dir="+System.getProperty("user.home")+"\\AppData\\Local\\Google\\Chrome\\User Data");
                     options.addArguments("--start-maximized");
-                    options.addExtensions(new File("C:\\Users\\Huseyin\\Desktop\\Google-Ceviri.crx"));
+                    //options.addExtensions(new File("C:\\Users\\Huseyin\\Desktop\\Google-Ceviri.crx"));
                     // options.addArguments("--headless");
 
                     WebDriverManager.chromedriver().setup();
