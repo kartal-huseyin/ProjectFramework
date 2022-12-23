@@ -23,11 +23,11 @@ import static actions.PropertyAction.*;
 public class Test1 {
 
     @Test
-    public void test1(){
+    public void test1() {
 
         driver().get(getProperty("url"));
-        sendKeys("Username",getProperty("username"));
-        sendKeys("Password",getProperty("password"));
+        sendKeys("Username", getProperty("username"));
+        sendKeys("Password", getProperty("password"));
         click("Login");
         click("Admin");
         clickSelect("User Role");
@@ -38,15 +38,15 @@ public class Test1 {
 
 
     @Test
-    public void test2(){
+    public void test2() {
         driver().get("https://demoqa.com/checkbox");
-        By locator=By.xpath("//button[@title=\"Toggle\"]");
+        By locator = By.xpath("//button[@title=\"Toggle\"]");
 
         System.out.println("driver().findElement(locator) = " + driver().findElements(locator));
         //  clickNew(locator);
 
 
-       List<WebElement> element = driver().findElements(locator).stream().filter(e -> {
+        List<WebElement> element = driver().findElements(locator).stream().filter(e -> {
             try {
                 waitNew(5).until(ExpectedConditions.elementToBeClickable(e));
                 return true;
@@ -55,73 +55,82 @@ public class Test1 {
             }
         }).toList();
 
-       clickNew1(locator);
+        clickNew1(locator);
 
     }
-    @Test
-    public void test3(){
-        driver().get("https://demoqa.com/checkbox");
-        By locator=By.xpath("//button[@title=\"Toggle1\"]");
 
-        if (waitNew1(locator)){
+    @Test
+    public void test3() {
+        driver().get("https://demoqa.com/checkbox");
+        By locator = By.xpath("//button[@title=\"Toggle1\"]");
+
+        if (waitNew1(locator)) {
             driver().findElement(locator).click();
-        }else{
+        } else {
             throw new RuntimeException();
         }
 
 
     }
-    @Test
-    public void test4(){
-        driver().get("https://demoqa.com/checkbox");
-        By locator=By.xpath("//li[contains(@class,\"collapsed\")]//button[@title=\"Toggle\"]");
 
-        while (driver().findElements(locator).size()>0){
-            for (WebElement e:driver().findElements(locator)) {
+    @Test
+    public void test4() {
+        driver().get("https://demoqa.com/checkbox");
+        By locator = By.xpath("//li[contains(@class,\"collapsed\")]//button[@title=\"Toggle\"]");
+        By locatorLabel = By.xpath("//li//input[@type=\"checkbox\"]/parent::label");
+
+
+        while (driver().findElements(locator).size() > 0) {
+            for (WebElement e : driver().findElements(locator)) {
                 clickNew(e);
             }
         }
+
+        for (WebElement e : driver().findElements(locatorLabel)) {
+            if (!e.findElement(By.xpath(".//input")).isSelected()) {
+                clickNew(e);
+            }
+
+        }
+
     }
-    public void clickNew(By locator){
 
-     waitNew(5).until(ExpectedConditions.elementToBeClickable(locator)).click();
-
+    public void clickNew(By locator) {
+        waitNew(5).until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
-    public void clickNew(WebElement e){
 
+    public void clickNew(WebElement e) {
         waitNew(5).until(ExpectedConditions.elementToBeClickable(e)).click();
-
     }
 
 
+    public void clickNew1(By locator) {
 
-    public void clickNew1(By locator){
-
-        if (waitNew1(locator)){
+        if (waitNew1(locator)) {
             driver().findElement(locator).click();
-        }else{
+        } else {
             throw new RuntimeException();
         }
     }
 
-    public WebDriverWait waitNew(long sec){
-      return new WebDriverWait(driver(), Duration.ofSeconds(sec*1000));
+    public WebDriverWait waitNew(long sec) {
+        return new WebDriverWait(driver(), Duration.ofSeconds(sec));
 
     }
 
-    public boolean waitNew1(By locator)  {
+    public boolean waitNew1(By locator) {
 
-        LocalTime tfinish=LocalTime.now().plusSeconds(10);
+        LocalTime tfinish = LocalTime.now().plusSeconds(10);
 
-        while (true){
+        while (true) {
             try {
-                if(Duration.between(LocalTime.now(),tfinish).isNegative()){
+                if (Duration.between(LocalTime.now(), tfinish).isNegative()) {
                     return false;
                 }
-                if(driver().findElement(locator).isDisplayed()) {
-                 return true;
-               }
-            }catch (Exception e){
+                if (driver().findElement(locator).isDisplayed()) {
+                    return true;
+                }
+            } catch (Exception e) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -131,6 +140,11 @@ public class Test1 {
 
         }
     }
+
+
+
+
+
 
 
 }
